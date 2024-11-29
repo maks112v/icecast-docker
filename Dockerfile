@@ -70,7 +70,8 @@ RUN xml-edit errorlog - /etc/icecast.xml
 RUN mkdir -p /var/log/icecast && \
     chown $USER /etc/icecast.xml /var/log/icecast
 
-EXPOSE 8000
+ENV ICECAST_PORT 8000
+EXPOSE $ICECAST_PORT
 ENTRYPOINT ["docker-entrypoint"]
 USER $USER
 CMD ["icecast", "-c", "/etc/icecast.xml"]
