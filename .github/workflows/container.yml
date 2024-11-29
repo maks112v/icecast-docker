@@ -3,23 +3,9 @@ name: Container
 on:
   push:
     branches: [main]
-    paths:
-      - .github/workflows/container.yml
-      - Dockerfile
-      - docker-entrypoint.sh
-      - Makefile
-      - SHA512SUMS.txt
-      - xml-edit.sh
 
   pull_request:
     branches: [main]
-    paths:
-      - .github/workflows/container.yml
-      - Dockerfile
-      - docker-entrypoint.sh
-      - Makefile
-      - SHA512SUMS.txt
-      - xml-edit.sh
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -35,7 +21,6 @@ jobs:
           - 2.5-beta3
 
     env:
-      DEFAULT_VARIANT: debian
       DEFAULT_VERSION: 2.4.4
 
     if: ${{ github.repository_owner == 'libretime' }}
