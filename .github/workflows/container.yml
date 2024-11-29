@@ -23,7 +23,6 @@ jobs:
     env:
       DEFAULT_VERSION: 2.4.4
 
-    if: ${{ github.repository_owner == 'libretime' }}
     steps:
       - uses: actions/checkout@v4
 
