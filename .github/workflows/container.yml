@@ -53,6 +53,8 @@ jobs:
           context: .
           pull: true
           file: Dockerfile
+          build-args: |
+            VERSION=${{ matrix.version }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           platforms: linux/amd64,linux/arm64
