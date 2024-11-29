@@ -39,6 +39,7 @@ You can tweak the configuration using the following environment variables:
 - `ICECAST_HOSTNAME`
 - `ICECAST_MAX_CLIENTS`
 - `ICECAST_MAX_SOURCES`
+- `ICECAST_PORT`
 
 Or you can mount your own configuration file in the container:
 
