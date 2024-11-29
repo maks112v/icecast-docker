@@ -31,5 +31,8 @@ fi
 if [ -n "$ICECAST_MAX_SOURCES" ]; then
   edit_icecast_config sources "$ICECAST_MAX_SOURCES"
 fi
+if [ -n "$ICECAST_PORT" ]; then
+  edit_icecast_config port "$ICECAST_PORT"
+fi
 
 exec "$@"

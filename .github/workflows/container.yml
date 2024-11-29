@@ -5,8 +5,7 @@ on:
     branches: [main]
     paths:
       - .github/workflows/container.yml
-      - alpine.dockerfile
-      - debian.dockerfile
+      - Dockerfile
       - docker-entrypoint.sh
       - Makefile
       - SHA512SUMS.txt
@@ -16,8 +15,7 @@ on:
     branches: [main]
     paths:
       - .github/workflows/container.yml
-      - alpine.dockerfile
-      - debian.dockerfile
+      - Dockerfile
       - docker-entrypoint.sh
       - Makefile
       - SHA512SUMS.txt
@@ -35,9 +33,6 @@ jobs:
         version:
           - 2.4.4
           - 2.5-beta3
-        variant:
-          - debian
-          - alpine
 
     env:
       DEFAULT_VARIANT: debian
@@ -63,7 +58,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - run: make icecast-${{ matrix.version }}.tar.gz
+      - run: make icecast.tar.gz
 
       - uses: docker/metadata-action@v5
         id: meta
@@ -72,19 +67,15 @@ jobs:
             ghcr.io/${{ github.repository_owner }}/icecast
             ${{ github.repository_owner }}/icecast
           tags: |
-            type=raw,value=${{ matrix.version }}-${{ matrix.variant }}
-            type=raw,value=${{ matrix.version }},enable=${{ matrix.variant == env.DEFAULT_VARIANT }}
-
-            type=raw,value=${{ matrix.variant }},enable=${{ matrix.version == env.DEFAULT_VERSION }}
-            type=raw,value=latest,enable=${{ matrix.variant == env.DEFAULT_VARIANT && matrix.version == env.DEFAULT_VERSION }}
+            type=raw,value=${{ matrix.version }}
+            type=raw,value=${{ matrix.version }}
+            type=raw,value=latest,enable=${{ matrix.version == env.DEFAULT_VERSION }}
 
       - uses: docker/build-push-action@v6
         with:
           context: .
           pull: true
-          file: ${{ matrix.variant }}.dockerfile
-          build-args: |
-            VERSION=${{ matrix.version }}
+          file: Dockerfile
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           platforms: linux/amd64,linux/arm64
